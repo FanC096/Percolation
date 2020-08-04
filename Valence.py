@@ -6,13 +6,13 @@ sys.setrecursionlimit(50000)
 count = 0
 k = 2  # valence graph of degree k
 p = 0.5  # probability
-n = 1000  # number of trials
+n = 1000000  # number of trials
 
 
 def valence():
     global count
     count += 1
-    for j in range(k):
+    for j in range(k - 1):
         r = np.random.uniform(0, 1)
         if r <= p:
             valence()
@@ -21,9 +21,12 @@ def valence():
 
 s = 0
 for i in range(n):
-    count = 0
-    valence()
-    print(count)
+    count = 1
+    for j in range(k):
+        r = np.random.uniform(0, 1)
+        if r <= p:
+            valence()
+    # print(count)
     s += count
 print(s/n)
 
