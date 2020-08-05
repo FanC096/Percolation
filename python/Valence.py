@@ -4,7 +4,7 @@ import sys
 sys.setrecursionlimit(50000)
 
 count = 0
-k = 2  # valence graph of degree k
+k = 4  # valence graph of degree k
 p = 0.5  # probability
 n = 1000000  # number of trials
 

@@ -37,9 +37,6 @@ public class Vertex {
 		edgeList.get(0).setStatus(edgeStatus);
 	}
 	
-
-	
-	
 	public void addNextEdge() {
 		Vertex nextV = new Vertex(this.getIndex() + 1);
 		Edge newEdge = new Edge();
@@ -49,7 +46,4 @@ public class Vertex {
 		this.edgeList.add(newEdge);
 	}
 	
-	
-
-
 }

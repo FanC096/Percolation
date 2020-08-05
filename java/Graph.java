@@ -25,20 +25,39 @@ public class Graph {
 	// could be sped up
 	public void breakEdges() {
 		Vertex curr = root;
+		Boolean prevEdgeStatus = null;
 		while (curr.getNext() != null) {
 			Double randomNum = Math.random(); //something between 0 and 1
 			Boolean status;
-			if (randomNum <= probability) { //is this the right way?
+			if (randomNum <= this.probability) { //is this the right way?
 				status = true;
 			} else {
 				status = false;
 			}
 			curr.setNextEdge(status);
+			prevEdgeStatus = status;
 			curr = curr.getNext();
 			//what we want is to get the edge and break it or not
 		}
+
+		// if curr.getNext() is null (we've reached the end of the graph)
+		// prevEdgeStatus true indicates that curr is part of an existing cluster
+		if (prevEdgeStatus) {
+			extendGraph(curr);
+		}
 		
-		
+	}
+
+	public void extendGraph(Vertex curr) {
+		Double randomNum = Math.random();
+		if (randomNum <= this.probability) {
+			curr.addNextEdge();
+			curr.setNextEdge(true);
+			extendGraph(curr.getNext());
+		} else {
+			// stop extending once first closed edge is reached
+			return
+		}
 	}
 	
 	/**
@@ -90,9 +109,6 @@ public class Graph {
 		int numClusters = clusterList.size();
 		//get average cluster size
 		double averageSize = total / numClusters;
-
-		
-		
 		
 	//	System.out.println(countList); //to print out cluster 
 		                               // sizes in a list by cluster
