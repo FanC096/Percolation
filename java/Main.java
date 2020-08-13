@@ -1,6 +1,3 @@
-package edu.brown.cs.student.stars;
-
-
 /**
  * The Main class of our project. This is where execution begins.
  *

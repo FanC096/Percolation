@@ -1,5 +1,3 @@
-package edu.brown.cs.student.stars;
-
 import java.util.ArrayList;
 import java.util.List;
 

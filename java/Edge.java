@@ -1,5 +1,3 @@
-package edu.brown.cs.student.stars;
-
 public class Edge {
 	Vertex v1;
 	Vertex v2;
