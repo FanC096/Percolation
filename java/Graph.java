@@ -1,4 +1,3 @@
-package edu.brown.cs.student.stars;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class Graph {
 			extendGraph(curr.getNext());
 		} else {
 			// stop extending once first closed edge is reached
-			return
+			return;
 		}
 	}
 	

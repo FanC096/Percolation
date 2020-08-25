@@ -1,1 +1,7 @@
-.idea/*
+.idea/
+
+# Eclipse files
+bin/
+src/
+.project
+.classpath
