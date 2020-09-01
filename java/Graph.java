@@ -55,7 +55,7 @@ public class Graph {
 			extendGraph(curr.getNext());
 		} else {
 			// stop extending once first closed edge is reached
-			return
+			return;
 		}
 	}
 	
