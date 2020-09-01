@@ -25,7 +25,6 @@ s = 0
 for i in range(n):
     count = 1
     for j in range(k):
-    for j in range(k - 1):
         r = np.random.uniform(0, 1)
         if r <= p:
             valence()
