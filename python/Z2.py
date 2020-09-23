@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 count = 0
 n = 1000  # number of trials
-pr = 0.49  # probability range upper bound (not include)
+pr = 0.5  # probability range upper bound (not include)
 s = 0
 dct = {}
 
@@ -13,14 +13,14 @@ for p in np.arange(0, pr, 0.01):
     # probability
     for i in range(n):
         included = {(0, 0)}
-        border = {(0, 1)}
+        border = {(0, 0)}
 
         while border:
             (x, y) = border.pop()
             if (x - 1, y) not in included:
                 r = np.random.uniform(0, 1)
                 if r <= p:
-                    included.add ((x - 1, y))
+                    included.add((x - 1, y))
                     border.add((x - 1, y))
 
             if (x + 1, y) not in included:
