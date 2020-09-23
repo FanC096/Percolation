@@ -6,12 +6,13 @@ public class Graph {
 	Double probability;
 	Vertex root = new Vertex(0);
 	Integer numNodes;
+	double numClosedEdges = 0;
 	
 	public void makeGraph(int numNodes, double prob) {
 		this.probability = prob;
 		this.numNodes = numNodes; //maybe in constructor
 		Vertex curr = root;
-		
+				
 		for (int i = 0; i < (numNodes - 1); i++) {
 			curr.addNextEdge();
 			curr = curr.getNext();
@@ -23,7 +24,7 @@ public class Graph {
 	//this is really inefficient b/c we make the graph, then break it
 	// could be sped up
 	public void breakEdges() {
-		Vertex curr = root;
+		Vertex curr = this.root;
 		Boolean prevEdgeStatus = null;
 		while (curr.getNext() != null) {
 			Double randomNum = Math.random(); //something between 0 and 1
@@ -32,6 +33,7 @@ public class Graph {
 				status = true;
 			} else {
 				status = false;
+				this.numClosedEdges++;
 			}
 			curr.setNextEdge(status);
 			prevEdgeStatus = status;
@@ -45,6 +47,8 @@ public class Graph {
 			extendGraph(curr);
 		}
 		
+		makeRootFuzzy(root);
+		
 	}
 
 	public void extendGraph(Vertex curr) {
@@ -52,9 +56,30 @@ public class Graph {
 		if (randomNum <= this.probability) {
 			curr.addNextEdge();
 			curr.setNextEdge(true);
+			this.numNodes++;
 			extendGraph(curr.getNext());
 		} else {
 			// stop extending once first closed edge is reached
+			return;
+		}
+	}
+	
+	// Should be called from breakEdges() on the root Vertex
+	public void makeRootFuzzy(Vertex curr) {
+//		System.out.println("calling makeRootFuzzy");
+		Double randomNum = Math.random();
+		if (randomNum <= this.probability) {
+			Vertex prev = new Vertex(curr.getIndex() - 1);
+			Edge newEdge = new Edge();
+			newEdge.setV1(curr);
+			newEdge.setV2(prev);
+			prev.edgeList.add(newEdge);
+			prev.next = curr;
+			
+			this.root = prev;
+			this.numNodes++;
+			makeRootFuzzy(this.root);
+		} else {
 			return;
 		}
 	}
@@ -106,12 +131,28 @@ public class Graph {
 		}
 		
 		int numClusters = clusterList.size();
+		assert(countList.size() == numClusters);
 		//get average cluster size
-		double averageSize = total / numClusters;
+		// THE MISSING FLOAT CAST HERE WAS THROWING THINGS OFF (every result was 1 or 2)
+		double averageSize = (double) total / numClusters;
 		
-	//	System.out.println(countList); //to print out cluster 
+		System.out.println(countList); //to print out cluster 
 		                               // sizes in a list by cluster
+//		System.out.println("numClusters is " + numClusters);
+//		System.out.println("countList size is " + countList.size());
+//		System.out.println("total vertices is " + total);
+//		System.out.println("average size is " + averageSize);
 		return averageSize;
+	}
+	
+	/**
+	 * Find average size of the clusters in a given graph quickly, by counting number of closed edges
+	 * @return average size of clusters
+	 */
+	public double quickAvgClusters()  {
+		
+		// a finite graph with n closed edges has n+1 clusters 
+		return (double) this.numNodes / (this.numClosedEdges + 1);
 	}
 	
 /**

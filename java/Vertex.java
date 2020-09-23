@@ -25,6 +25,7 @@ public class Vertex {
 	
 	public Boolean nextEdge() {
 		if (edgeList.size() == 0) {
+			System.out.println("boo");
 			return null;
 		}
 		return edgeList.get(0).exists();

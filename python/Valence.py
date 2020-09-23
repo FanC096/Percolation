@@ -6,7 +6,7 @@ sys.setrecursionlimit(50000)
 
 count = 0
 k = 2  # valence graph of degree k
-p = 0.5  # probability
+p = 0.6  # probability
 n = 1000000  # number of trials
 lst = [None] * n
 dist = [0, 0, 0, 0, 0, 0, 0]
@@ -29,7 +29,7 @@ Suggests that the number of "spokes" is  linearly related to the expected
 cluster size - maybe we can analyze other trees in terms of their spokes,
 instead of their layers (and then apply linearity of expectation??)
 '''
-additional_main_branches = 0
+additional_main_branches = -1
 
 def valence():
     global count
@@ -40,22 +40,25 @@ def valence():
             valence()
     return
 
+# To perform calculations for variable values of p
+for p in np.arange(0.0,1.0,0.1):
+    print(p)
 
-s = 0
-for i in range(n):
-    count = 1
-    for j in range(k + additional_main_branches):
-        r = np.random.uniform(0, 1)
-        if r <= p:
-            valence()
-    # print(count)
-    lst[i] = count
-    if count <= 7:
-        dist[count - 1] += 1
-    s += count
-print(s/n)
-print(dist)
-plt.hist(lst, bins=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
-plt.show()
+    s = 0
+    for i in range(n):
+        count = 1
+        for j in range(k + additional_main_branches):
+            r = np.random.uniform(0, 1)
+            if r <= p:
+                valence()
+        # print(count)
+        lst[i] = count
+        if count <= 7:
+            dist[count - 1] += 1
+        s += count
+    print(s/n)
+    print(dist)
+    # plt.hist(lst, bins=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+    # plt.show()
 
 
